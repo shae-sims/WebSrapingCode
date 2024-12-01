@@ -72,9 +72,15 @@ data2023.to_csv('data2024withRankingAll.csv')
 
 driver.close()
 
-#Rename Data to work in the plots
+#Clean the data to work in the plots
 
-players = data2023
+players = data2023.drop(columns= ['Unnamed: 0', 'logo url'])
+players = players.rename(columns= {'RK' : 'rank', 'NAME':'name','GP':'games_played',
+                            'SETS':'sets_played','KILLS': 'kills', 'KILL/S':'kills_per_set',
+                            'PCT': 'hitting_percentage', 'A':'assists', 'A/S': 'assists_per_set',
+                            'BLK':'blocks', 'BLK/S':'blocks_per_set', 'DIG':'digs',
+                            'DIG/S':'digs_per_set', 'SA':'service_aces', 
+                            'SA/S':'service_aces_per_set', 'R%':'reception_percentage'})
 
 #Import packages for plots
 
