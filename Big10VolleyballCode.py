@@ -71,3 +71,69 @@ data2023.to_csv('data2024withRankingAll.csv')
 # Close the Driver
 
 driver.close()
+
+#Rename Data to work in the plots
+
+players = data2023
+
+#Import packages for plots
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+#Create Correlation Matrix
+
+correlation_matrix = players.drop(columns=['games_played', 'sets_played', 'name']).corr().round(2)
+plt.figure(figsize=(8, 6))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', square=True)
+plt.title('Correlation Heatmap')
+plt.show()
+
+#Ranking Scatterplots
+
+fig, axs = plt.subplots(2, 2, figsize=(10, 10))
+axs[0,0].scatter(players['rank'],players['blocks'], color = 'skyblue')
+axs[0,0].set_xlabel('Rank of Athlete')
+axs[0,0].set_ylabel('Total Number of Blocks')
+axs[0,0].set_title('Rank compared to Blocks')
+
+axs[0,1].scatter(players['rank'],players['blocks_per_set'], color = 'skyblue')
+axs[0,1].set_xlabel('Rank of Athlete')
+axs[0,1].set_ylabel('Total Number of Blocks per Set')
+axs[0,1].set_title('Rank compared to Blocks per Set')
+
+axs[1,0].scatter(players['rank'],players['kills'], color = 'skyblue')
+axs[1,0].set_xlabel('Rank of Athlete')
+axs[1,0].set_ylabel('Total Number of Kills')
+axs[1,0].set_title('Rank compared to Kills')
+
+axs[1,1].scatter(players['rank'],players['kills_per_set'], color = 'skyblue')
+axs[1,1].set_xlabel('Rank of Athlete')
+axs[1,1].set_ylabel('Total Number of Kills per Set')
+axs[1,1].set_title('Rank compared to Kills per Set')
+plt.show()
+
+#Other Scatterplots
+
+fig, axs = plt.subplots(1, 2, figsize=(10, 5))
+axs[0].scatter(players['blocks'],players['kills'], color = 'darkcyan')
+axs[0].set_xlabel('Number of Blocks')
+axs[0].set_ylabel('Number of Kills')
+axs[0].set_title('Number of Blocks VS Number of Kills')
+
+axs[1].scatter(players['digs'],players['service_aces'], color = 'darkcyan')
+axs[1].set_xlabel('Number of Digs')
+axs[1].set_ylabel('Number of Aces')
+axs[1].set_title('Digs compared to Aces')
+plt.show()
+
+#Barplot
+
+top_hitters = players[0:5]
+
+plt.figure(figsize= (7,7))
+sns.barplot(top_hitters, x = 'name', y= 'hitting_percentage')
+plt.ylabel('Hitting Percentage')
+plt.xlabel('Athletes Name')
+plt.title('Top 5 Athletes Hitting Percentage')
+plt.show()
